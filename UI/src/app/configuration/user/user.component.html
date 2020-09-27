@@ -78,7 +78,22 @@
                     <div [hidden]="!email.hasError( 'pattern')">Proper format required</div>
                 </div>
             </div>
-
+            <div class="form-group col-md-12">
+                <label for="role">Role Type</label>
+                <select  id="role" 
+                class="form-control" list="plt-datalist" [(ngModel)]="user.role"
+                name="role" #role="ngModel" placeholder="role" required>
+                <option *ngIf="action!='Edit'" [ngValue]="" disabled selected>
+                    Select role
+                </option>
+                <option *ngIf="action=='Edit'" [ngValue]="user.role" disabled selected>
+                    {{user.role}}
+                </option>
+                <option *ngFor="let data of roles" [ngValue]="data">
+                    {{data.roleName}}
+                </option>
+            </select>
+            </div>
             
           </div>
           
