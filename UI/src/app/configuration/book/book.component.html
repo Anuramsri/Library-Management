@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <p style="float: left;">Configuration</p>
+            <button  type="button" title="Add Process" class="btn btn-outline-success btn-sm" style="float: right;" (click)="openModal(template,'Add',null,null)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive ">
+            <table class="table table-hover ">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Serial No</th>
+                  <th scope="col">Book</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let element of books;let i = index">
+                  <td scope="row">{{i +1}}</td>
+                  <td scope="row">{{element.book}}</td>
+                  <td>{{element.author}}</td>
+                  <td>
+                    <i title="Edit Process" class="fa fa-edit "(click)="openModal(template, 'Edit',element,i)"></i>&nbsp;&nbsp;&nbsp;
+                    <i title="Delete Process" class="fa fa-trash-o" (click)="openModal(template1,'delete',element,i)"></i>                    
+                  </td>
+                </tr>
+              </tbody>
+            </table> 
+          </div>
+        </div>
+    </div>
+</div>
+
+<ng-template class="modal" #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{action}} Process</h4>
+      <button type="button" title="Close" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="example-container">
+        <form #uform="ngForm">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="prop">Characteristic</label>
+                <input type="text"  [(ngModel)]="process.characteristic" name="prop" class="form-control" id="prop" required
+                    pattern="[A-Za-z ]+"  placeholder="Characteristic" #prop="ngModel" ngModel>
+                <div [hidden]="prop.valid || prop.pristine" class="alert alert-danger">
+                    <div [hidden]="!prop.hasError( 'required')">Characteristic is required</div>
+                    <div [hidden]="!prop.hasError( 'pattern')">Only alphabets allowed</div>
+                </div>
+            </div>
+          </div>
+          
+          <button class="btn1 btn-primary" [disabled]="!uform.form.valid"
+            (click)="saveTo()">{{action == 'Edit' ? 'Update':'Add'}}</button>&nbsp; &nbsp;&nbsp; &nbsp;
+          <button class="btn1 btn-danger" (click)="modalRef.hide()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template class="modal" #template1>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete Characteristic</h4>
+        <button type="button" class="close pull-right" aria-label="Close" title="Delete characteristic" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    <div class="modal-body">
+        <div class="example-container">
+            <form>
+                <div>
+                    <p> Are You Sure to Delete</p>
+                </div>
+                <button type="submit" class="btn btn-primary" (click)="delete();modalRef.hide()">Delete</button>
+                <button type="submit" class="btn btn-primary" (click)="modalRef.hide()">Cancel</button>
+            </form>
+        </div>
+    </div>
+  </ng-template>
