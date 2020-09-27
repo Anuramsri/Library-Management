@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ConfigurationService } from '../configuration.service';
 @Component({
-  selector: 'book-configuration',
+  selector: 'app-book-configuration',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css'],
   providers:[ConfigurationService]
@@ -9,10 +9,8 @@ import { ConfigurationService } from '../configuration.service';
 export class BookConfigurationComponent implements OnInit {
 
   constructor() {
-    this.books = [{book :'rework',author:'anu'},{book:'21st Centurary',author:'ram'}]
    }
-   template;
-   books;
+ 
   ngOnInit(): void {
   }
 
