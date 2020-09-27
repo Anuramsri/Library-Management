@@ -1,1 +1,111 @@
-<p>User component works!</p>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h3 style="float: left;">User Configuration</h3>
+            <button  type="button" title="Add Process" class="btn btn-outline-success btn-sm" style="float: right;" (click)="openModal(template,'Add',null,null)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive ">
+            <table class="table table-hover ">
+              <thead class="thead-dark">
+                <tr>
+                  <!-- <th scope="col">Serial No</th> -->
+                  <th scope="col">User Name</th>
+                  <th scope="col">Mobile Number</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Role Type</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let element of users;let i = index">
+                  <!-- <td scope="row">{{i +1}}</td> -->
+                  <td scope="row">{{element.userName}}</td>
+                  <td>{{element.mobileNumber}}</td>
+                  <td>{{element.email}}</td>
+                  <td>{{element.role}}</td>
+                  <td>
+                    <i title="Edit Process" class="fa fa-edit "(click)="openModal(template, 'Edit',element,i)"></i>&nbsp;&nbsp;&nbsp;
+                    <i title="Delete Process" class="fa fa-trash-o" (click)="openModal(template1,'delete',element,i)"></i>                    
+                  </td>
+                </tr>
+              </tbody>
+            </table> 
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <ng-template class="modal" #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{action}} Users</h4>
+      <button type="button" title="Close" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="example-container">
+        <form #uform="ngForm">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="userName">User Name</label>
+                <input type="text"  [(ngModel)]="user.userName" name="userName" 
+                class="form-control" id="userName" required
+                    pattern="[A-Za-z ]+"  placeholder="Type your name here" #userName="ngModel" ngModel>
+                <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
+                    <div [hidden]="!userName.hasError( 'required')">userName is required</div>
+                    <div [hidden]="!userName.hasError( 'pattern')">Only alphabets allowed</div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="mobileNumber">Mobile Number</label>
+                <input type="text" [(ngModel)]="user.mobileNumber" maxlength="10" name="mobileNumber"
+                class="form-control" id="mobileNumber" required pattern="[0-9]{10}"
+                 placeholder="Type your mobilenumber here" #mobileNumber = "ngModel" ngModel>
+                 <div [hidden]="mobileNumber.valid || mobileNumber.pristine" class="alert alert-danger">
+                    <div [hidden]="!mobileNumber.hasError( 'required')">mobileNumber is required</div>
+                    <div [hidden]="!mobileNumber.hasError( 'pattern')">Must be 10 digits</div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email"
+                [(ngModel)] = "user.email" required placeholder="Type your email" #email = "ngModel" ngModel>
+                <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                    <div [hidden]="!email.hasError( 'required')">email is required</div>
+                    <div [hidden]="!email.hasError( 'pattern')">Proper format required</div>
+                </div>
+            </div>
+
+            
+          </div>
+          
+          <button class="btn1 btn-primary" [disabled]="!uform.form.valid"
+            (click)="saveTo(book)">{{action == 'Edit' ? 'Update':'Add'}}</button>&nbsp; &nbsp;&nbsp; &nbsp;
+          <button class="btn1 btn-danger" (click)="modalRef.hide()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  
+  <ng-template class="modal" #template1>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete Book</h4>
+        <button type="button" class="close pull-right" aria-label="Close" title="Delete book" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    <div class="modal-body">
+        <div class="example-container">
+            <form>
+                <div>
+                    <p> Are You Sure to Delete</p>
+                </div>
+                <button type="submit" class="btn btn-primary" (click)="delete();modalRef.hide()">Delete</button>&nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary" (click)="modalRef.hide()">Cancel</button>
+            </form>
+        </div>
+    </div>
+  </ng-template>
