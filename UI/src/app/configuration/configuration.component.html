@@ -6,49 +6,10 @@
 </form>
 
 
-<div class="pr" *ngIf="loadComponent=='role'">
-  <app-role></app-role>
-</div>
-<div class="pr" *ngIf="loadComponent == 'user'">
-  <app-user></app-user>
-</div>
-<div class="pr" *ngIf="loadComponent == 'mail'">
-  <app-mail></app-mail>
-</div>
-<div class="pr" *ngIf="loadComponent=='plant'">
-  <app-plant></app-plant>
-</div>
-<div class="pr" *ngIf="loadComponent == 'shop'">
-  <app-shop></app-shop>
-</div>
-<div class="pr" *ngIf="loadComponent == 'shift'">
-  <app-shift></app-shift>
-</div>
-<div class="pr" *ngIf="loadComponent == 'machine'">
-  <app-machine></app-machine>
-</div>
-<div class="pr" *ngIf="loadComponent=='alarm'">
-  <app-alarm></app-alarm>
-</div>
-<div class="pr" *ngIf="loadComponent=='parameter'">
-  <app-parameter></app-parameter>
-</div>
 
-<!-- <div class="pr" *ngIf="loadComponent=='logger'">
-  <app-logger></app-logger>
-</div> -->
-<div class="pr" *ngIf="loadComponent=='downtimereasons'">
-  <app-downtime-reasons></app-downtime-reasons>
+<div class="pr" *ngIf="loadComponent == 'user'">
+  <app-user-configuration></app-user-configuration>
 </div>
-<div class="pr" *ngIf="loadComponent=='rejectreasons'">
-  <app-reject-reasons></app-reject-reasons>
-</div>
-<div class="pr" *ngIf="loadComponent=='escalation'">
-  <app-escalation></app-escalation>
-</div>
-<div class="pr" *ngIf="loadComponent=='mold'">
-  <app-mold></app-mold>
-</div>
-<div class="pr" *ngIf="loadComponent=='pdtReasons'">
-  <app-pdtReasons></app-pdtReasons>
+<div class="pr" *ngIf="loadComponent=='book'">
+  <app-book-configuration></app-book-configuration>
 </div>
