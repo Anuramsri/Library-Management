@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams, RequestOptions, RequestMethod } from '@angular/http';
-// import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-// import 'rxjs/add/operator/catch';
+import 'rxjs/Rx';
 import { environment } from '../../environments/environment';
-import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class ConfigurationService {
@@ -13,6 +12,10 @@ export class ConfigurationService {
 
     constructor(private http: Http) { }
 
+    getBooks() {
+        return this.http.get(this.localApiUrl + "GetBooks")
+          .pipe(map((res: Response) => res.json()));
+    }
     // addbooks(data) {
 
     //     return this.http.post(this.localApiUrl + "books", data)

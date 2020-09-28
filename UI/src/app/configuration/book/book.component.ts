@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BookConfigurationComponent implements OnInit {
 
-  constructor(private modalService: BsModalService,private toastr: ToastrService) {
+  constructor(private modalService: BsModalService,private toastr: ToastrService,private configServe: ConfigurationService) {
     this.books = [{book :'rework',author:'anu',publisher : 'a1'},{book :'21st',author:'ram',publisher : 'a1'}]
    }
 
@@ -39,6 +39,13 @@ export class BookConfigurationComponent implements OnInit {
     }
   }
   getBooks(){
+    this.configServe.getBooks()
+    .subscribe(
+      (res) => {
+        console.log(res['result'])
+      }
+      )
+
   }
 
   saveTo(book){
