@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpModule,
     ModalModule.forRoot(),
     ToastrModule.forRoot(),
     BrowserAnimationsModule
