@@ -13,6 +13,12 @@ export class ConfigurationComponent implements OnInit {
   
   
   constructor() { }
+
+  ngOnInit() {
+    this.config = 'user';
+    this.loadMyChildComponent('user');
+  }
+
   loadMyChildComponent(val) {
     this.loadComponent = val;
 
@@ -29,7 +35,5 @@ export class ConfigurationComponent implements OnInit {
     }   
   ]
 
-  ngOnInit() {
-  }
-
+ 
 }
