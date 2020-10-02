@@ -1,12 +1,18 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            Configuration
+        </div>
 <form>
   <select (change)="loadMyChildComponent(config)" name="configuration" class="form-control  mob" [(ngModel)]="config"
       id="exampleFormControlSelect1" aria-placeholder="configuration">
       <option *ngFor="let data of configuration" value="{{data.id}}">{{data.name}}</option>
   </select>
 </form>
-
+</div>
+</div>
 <br>
-
+<br>
 
 <div class="pr" *ngIf="loadComponent == 'user'">
   <app-user-configuration></app-user-configuration>

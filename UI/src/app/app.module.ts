@@ -6,6 +6,10 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import {UserConfigurationComponent} from '../app/configuration/user/user.component';
 import {BookConfigurationComponent} from '../app/configuration/book/book.component';
 import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +20,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ModalModule.forRoot(),
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
