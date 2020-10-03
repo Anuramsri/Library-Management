@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from "@angular/router";
 import { Http, Response, Headers, URLSearchParams, RequestOptions, RequestMethod } from '@angular/http';
 import { environment } from "../../environments/environment";
-import { switchAll } from 'rxjs/operators';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -38,20 +37,20 @@ export class LoginComponent implements OnInit {
       if(res['result']){
         localStorage.setItem('name',res['result']['name'])
         localStorage.setItem('role',res['result']['role'])
+        this.router.navigate(['/dashboard']);
       }else{
         this.errorLogin() 
       }
     })
-
-    this.router.navigate(['login']);
   }
 
 errorLogin(){
   this._snackBar.open('Invalid User Credentials!!', 'End now', {
-    duration: 500,
+    duration: 1000,
     horizontalPosition: this.horizontalPosition,
     verticalPosition: this.verticalPosition,
   });
+  localStorage.clear();
 }
 
 }
