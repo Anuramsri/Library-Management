@@ -1,6 +1,7 @@
 const graphql = require('graphql');
 const { GraphQLObjectType,GraphQLString, GraphQLSchema,GraphQLID,GraphQLInt,GraphQLList }  =  graphql;
 const dao = require('../Methods');
+const auth = require('../Auth/Auth');
 
 const BookType = new GraphQLObjectType({
     name: 'Book',
@@ -9,6 +10,7 @@ const BookType = new GraphQLObjectType({
         name: { type: GraphQLString },
         publisher : { type: GraphQLString },
         author: { type: GraphQLString },
+        linked: { type: GraphQLString }
     })
 })
 
@@ -31,13 +33,13 @@ const RootQuery = new GraphQLObjectType({
         books: {
             type: new GraphQLList(BookType),
             resolve(parent,args){
-                return  dao.getAll('book')                
+                return dao.getAll('book')
             }
         },
         users: {
             type: new GraphQLList(UserType),
             resolve(parent,args){
-              return  dao.getAll('user')
+                return dao.getAll('user')
             }
         }
     }
@@ -54,6 +56,7 @@ const Mutation = new GraphQLObjectType({
                 author: {type:GraphQLString}
             },
             resolve(parent,args){
+               args.linked = null;
                return dao.add('book',args)
             }
         },
@@ -88,7 +91,15 @@ const Mutation = new GraphQLObjectType({
                 role: { type: GraphQLString }
             },
             resolve(parent,args){
-               return dao.add('user',args)
+                let promise = new Promise((resolve,reject)=>{
+                    resolve(auth.hash(args.password));
+                });
+                promise.then((newPassword)=>{
+                    args.password = newPassword;
+                    return dao.add('user',args)
+                }).catch(()=>{
+                    return 'Error';
+                })
             }
         },
         updateUser: {
@@ -111,7 +122,7 @@ const Mutation = new GraphQLObjectType({
             resolve(parent,args){
                return dao.remove('user',args)
             }
-        }
+        },
     }
 })
 

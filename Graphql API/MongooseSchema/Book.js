@@ -17,6 +17,10 @@ var bookSchema = new Schema({
         type: String,
         required: true
     },
+
+    linked: {
+        type: String,
+    },
  
 }, {
     timestamps: true
