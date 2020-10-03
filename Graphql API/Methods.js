@@ -68,6 +68,57 @@ let login = async (req,res)=>{
     }
 }
 
+let addBookList = (req,res)=>{
+    let userId = req.body.userId;
+    let bookId = JSON.parse(req.body.bookId);
+
+    bookId.map(async (val)=>{
+        let result =  await MongoModels['book'].findByIdAndUpdate(val, {
+            linked: userId
+        }, {
+            new: true
+        });
+    });
+    res.status(200).json({
+        status: "Success",
+        result: "Updated Successfully!"
+    });
+}
+
+let removeBookList = (req,res)=>{
+    let userId = req.body.userId;
+    let bookId = JSON.parse(req.body.bookId);
+
+    bookId.map(async (val)=>{
+        let result =  await MongoModels['book'].findOneAndUpdate({_id:val,linked:userId}, {
+            linked: null
+        }, {
+            new: true
+        });
+    });
+    res.status(200).json({
+        status: "Success",
+        result: "Updated Successfully!"
+    });
+}
+
+let getBookList = async (req,res)=>{
+    let userId = req.params.userId;
+    if(userId){
+        let result = await MongoModels['book'].find({linked:userId});
+        res.status(200).json({
+            status: "Success",
+            result: result
+        });
+    }
+    else{
+        res.status(200).json({
+            status: "Success",
+            error: "Get Failed!"
+        });
+    }
+}
+   
 /**exports */
 
 module.exports = {
@@ -75,5 +126,8 @@ module.exports = {
     add: add,
     remove: remove,
     update: update,
-    login: login
+    login: login,
+    addBookList: addBookList,
+    getBookList: getBookList,
+    removeBookList: removeBookList
 }

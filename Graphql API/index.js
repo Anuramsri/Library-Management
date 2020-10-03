@@ -4,6 +4,7 @@ const {graphqlHTTP} = require('express-graphql');
 const schema = require('./Schema/Schema');
 const config = require('./Config/Config');
 const loginController = require('./Methods');
+const dataController = require('./Methods');
 const db = require('./db/db');
 
 let init = async ()=>{
@@ -26,7 +27,9 @@ let init = async ()=>{
     app.use(allowCrossDomain);
 
     app.post('/login',loginController.login);
-    
+    app.post('/bookList',dataController.addBookList);
+    app.delete('/bookList',dataController.removeBookList);
+    app.get('/bookList/:id',dataController.getBookList);
     app.use('/graphql',graphqlHTTP({
         schema,
         graphiql:true

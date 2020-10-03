@@ -10,6 +10,7 @@ const BookType = new GraphQLObjectType({
         name: { type: GraphQLString },
         publisher : { type: GraphQLString },
         author: { type: GraphQLString },
+        linked: { type: GraphQLString }
     })
 })
 
@@ -55,6 +56,7 @@ const Mutation = new GraphQLObjectType({
                 author: {type:GraphQLString}
             },
             resolve(parent,args){
+               args.linked = null;
                return dao.add('book',args)
             }
         },
