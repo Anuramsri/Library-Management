@@ -11,8 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 export class UserConfigurationComponent implements OnInit {
 
   constructor(private modalService: BsModalService,private toastr: ToastrService) {
-    this.users = [{userName :'anu',mobileNumber:9944424289,email : 'anura,m.ar480@gmail.com',role:'Admin'}]
-    this.roles = [{roleCode:1,roleName :'Admin'},{roleCode:2,roleName :'Normal'}]
+    this.users = [{name :'anu',mobileNumber:9944424289,email : 'anura,m.ar480@gmail.com',role:'Admin',password:"123"}]
+    // this.roles = [{roleCode:1,roleName :'Admin'},{roleCode:2,roleName :'Normal'}]
    }
 
  users;
@@ -21,7 +21,7 @@ export class UserConfigurationComponent implements OnInit {
  modalRef1: BsModalRef;
  action;
  index;
- user = {};
+ user:any = {};
   ngOnInit(): void {
   }
 

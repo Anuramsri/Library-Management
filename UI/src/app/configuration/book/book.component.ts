@@ -11,15 +11,19 @@ import { ToastrService } from 'ngx-toastr';
 export class BookConfigurationComponent implements OnInit {
 
   constructor(private modalService: BsModalService,private toastr: ToastrService,private configServe: ConfigurationService) {
-    this.books = [{book :'rework',author:'anu',publisher : 'a1'},{book :'21st',author:'ram',publisher : 'a1'}]
+    this.books = [{name :'rework',author:'anu',publisher : 'a1',thumbnail:''},{name :'21st',author:'ram',publisher : 'a1',thumbnail:''}]
    }
 
- books;
+ books :any = [];
  modalRef: BsModalRef;
  modalRef1: BsModalRef;
  action;
  index;
- book = {};
+ 
+ book:any = {
+   thumbnail :''
+ };
+
   ngOnInit(): void {
   }
 
@@ -29,15 +33,22 @@ export class BookConfigurationComponent implements OnInit {
     console.log(data,index)
     if (data) {
       this.index = index;
-      this.book = {
-        book: data.book,
-        author: data.author,
-        publisher:data.publisher
-      }
+      this.book = {...data}
     }else {    
       this.book = {}
     }
   }
+
+  handleFileInput(file) {
+    if (!file[0]) return
+    if (file[0]['size'] > 1247399) {
+      this.books[this.index]['thumbnail'] = undefined
+      return this.toastr.error("file size shouldn't exceed 1mb")
+    }
+
+    this.books[this.index]['thumbnail'] = file[0]
+  }
+
   getBooks(){
     this.configServe.getBooks()
     .subscribe(
@@ -49,11 +60,7 @@ export class BookConfigurationComponent implements OnInit {
   }
 
   saveTo(book){
-    this.book = {
-      book:book.book,
-      author: book.author,
-      publisher:book.publisher
-    }
+    this.book = {...book} 
     console.log(this.book)
     this.modalRef.hide();
     console.log("Added successfully")
