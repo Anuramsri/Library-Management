@@ -4,6 +4,7 @@ import { AuthGuard } from '../app/Authguard/authguard.service';
 import { ConfigurationComponent } from '../app/configuration/configuration.component';
 import { BookConfigurationComponent } from '../app/configuration/book/book.component';
 import { LoginComponent } from '../app/login/login.component';
+import {DashboardComponent} from './Dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,12 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    // canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
     // canActivate: [AuthGuard],
   },
 

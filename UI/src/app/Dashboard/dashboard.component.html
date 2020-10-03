@@ -1,0 +1,37 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+    <span style="padding: 1%;">Library Management</span>
+      <div class="spacer">      
+      </div>
+      <span style="padding: 1%;">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+      </span>    
+  </div>
+  
+  <div class="content" role="main">
+    <div class="card-container">
+      <input  class="form-control form-control-lg" type="text" [(ngModel)]=q (keyup)=search() placeholder="Search book">
+    </div>  
+  </div>
+  
+  
+  
+  <div class="row" style="padding: 20px;">
+    <div class="col-md-3" *ngFor="let card of obs | async">
+      <mat-card class="example-card" >
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{card.title}}</mat-card-title>
+          <mat-card-subtitle>{{card.author}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{card.publisher}}</p>
+        </mat-card-content>
+        <mat-card-actions>        
+          <button mat-raised-button>Link</button>        
+        </mat-card-actions>
+      </mat-card>
+      <br><br>
+    </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

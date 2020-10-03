@@ -13,8 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import {DashboardComponent} from './Dashboard/dashboard.component';
+ 
 // Testing
 import { MatSliderModule } from '@angular/material/slider';
 // Material
@@ -28,7 +28,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ConfigurationComponent,
     UserConfigurationComponent,
     BookConfigurationComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
