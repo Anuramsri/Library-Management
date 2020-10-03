@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="card">
       <div class="card-header">
           <h3 style="float: left;">Book Configuration</h3>
@@ -8,8 +8,7 @@
           <div class="table-responsive ">
           <table class="table table-hover ">
             <thead class="thead-dark">
-              <tr>
-                <!-- <th scope="col">Serial No</th> -->
+              <tr>                
                 <th scope="col">Book</th>
                 <th scope="col">Author</th>
                 <th scope="col">Publisher</th>
@@ -17,8 +16,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let element of books;let i = index">
-                <!-- <td scope="row">{{i +1}}</td> -->
+              <tr *ngFor="let element of books;let i = index">                
                 <td scope="row">{{element.book}}</td>
                 <td>{{element.author}}</td>
                 <td>{{element.publisher}}</td>
@@ -47,14 +45,15 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <label for="book">Book</label>
-            <input type="text" [(ngModel)] = "book.book" name="book" class="form-control" id="book" required 
+            <input type="text" [(ngModel)] = "book.name" name="book" class="form-control" id="book" required 
             placeholder="Type book name here" #book="ngModel" ngModel>            
           </div>
+
           <div class="form-group col-md-12">
               <label for="author">Author</label>
-              <input type="text"  [(ngModel)]="book.author" name="author" 
-              class="form-control" id="author" required
-                  pattern="[A-Za-z ]+"  placeholder="Type author name here" #author="ngModel" ngModel>
+              <input type="text"  [(ngModel)]="book.author" name="authorN" 
+              class="form-control" id="authorName" required
+                  pattern="[A-Za-z ]+"  placeholder="Type author name here" #authorName="ngModel" ngModel>
               <div [hidden]="author.valid || author.pristine" class="alert alert-danger">
                   <div [hidden]="!author.hasError( 'required')">author is required</div>
                   <div [hidden]="!author.hasError( 'pattern')">Only alphabets allowed</div>
@@ -70,6 +69,12 @@
                 <div [hidden]="!publisher.hasError( 'pattern')">Only alphabets allowed</div>
             </div>
           </div>
+        </div>
+        <div class="form-group col-md-12" *ngIf="action=='Update'">
+          <label for="inputName" class="label-control">UPLOAD FILE</label>
+          <input (change)="handleFileInput($event.target.files)" accept="image/png,image/jpeg,.pdf"
+           type="file" [(ngModel)]="book.thumbnail"
+            name="file" style="position: relative;opacity: 1;" required>
         </div>
         
         <button class="btn1 btn-primary" [disabled]="!uform.form.valid"
@@ -98,4 +103,4 @@
           </form>
       </div>
   </div>
-</ng-template>
+</ng-template> -->

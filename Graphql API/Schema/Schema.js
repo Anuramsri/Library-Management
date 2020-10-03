@@ -31,7 +31,13 @@ const RootQuery = new GraphQLObjectType({
         books: {
             type: new GraphQLList(BookType),
             resolve(parent,args){
-                dao.getAll('book')
+                return  dao.getAll('book')                
+            }
+        },
+        users: {
+            type: new GraphQLList(UserType),
+            resolve(parent,args){
+              return  dao.getAll('user')
             }
         }
     }

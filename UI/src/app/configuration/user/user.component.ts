@@ -21,7 +21,7 @@ export class UserConfigurationComponent implements OnInit {
  modalRef1: BsModalRef;
  action;
  index;
- user = {};
+ user:any = {};
   ngOnInit(): void {
   }
 
