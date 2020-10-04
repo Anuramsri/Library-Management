@@ -18,8 +18,7 @@ export class UserConfigurationComponent implements OnInit {
     private toastr: ToastrService,
     private graphqlService: GraphQlService, 
     private apollo : Apollo   
-    ) {
-    // this.users = [{name :'anu',mobileNumber:9944424289,email : 'anura,m.ar480@gmail.com',role:'Admin',password:"123"}]
+    ) {   
     this.roles = ['Admin','User']
    }
 
@@ -68,8 +67,6 @@ export class UserConfigurationComponent implements OnInit {
     }else {    
       this.user = {}
     }
-  }
-  getusers(){
   }
 
   saveTo(user){

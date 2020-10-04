@@ -1,97 +1,88 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { debounceTime } from 'rxjs/operators';
-export interface Card {
-  title: string;
+import { MatPaginator } from '@angular/material';
+import { GraphQlService } from "../../shared/graphql.service";
+import { Router } from "@angular/router";
+
+export interface Book {
+  name: string;
   author: string;
   publisher: string;
 }
-
-const DATA: Card[] = [
-  {
-    title: 'books 1',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 2',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 3',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 4',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 5',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 6',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 7',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 8',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 9',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  },
-  {
-    title: 'books 10',
-    author: 'Don Lee Anu',
-    publisher: 'Published by Ram publication'
-  }
-];
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent{
   q;
   subscription;
+  books:any =[]
+  filterdBooks: any = [];
+  totalBooks = 0;
+  limit = 5;
+  page = 0;
+  name;
+  role;
   
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
   obs: Observable<any>;
-  dataSource: MatTableDataSource<Card> = new MatTableDataSource<Card>(DATA);
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private graphqlService: GraphQlService,
+    private router: Router
+    ) {
   }
 
   ngOnInit() {
     this.changeDetectorRef.detectChanges();
-    this.dataSource.paginator = this.paginator;
-    this.obs = this.dataSource.connect();
+    this.getBooks();
+    this.name =  localStorage.getItem('name')
+    this.role = localStorage.getItem('role')
   }
 
-  search(){
-    var data =  this.q
-    console.log(data)
+  search(value){
+    this.filterdBooks = this.books.filter(book => book.author.includes(value) || book.name.includes(value) || book.publisher.includes(value))
+    this.totalBooks = this.filterdBooks.length;
+    this.filterdBooks = this.filterdBooks.slice(this.page * this.limit, (this.page + 1) * this.limit);
+    console.log(this.filterdBooks);
   }
 
+  logout(){
+    localStorage.clear();
+    this.name= '';
+    this.router.navigate(['/login']);
+  }
 
-  ngOnDestroy() {
-    if (this.dataSource) { 
-      this.dataSource.disconnect(); 
+  onChange(event) {
+    this.page = event ? event.pageIndex : 0;
+    this.limit = event ? event.pageSize : 5;
+    this.filterdBooks = this.books.slice(this.page * this.limit, (this.page + 1) * this.limit);
+  }
+
+  getBooks(){
+    this.graphqlService.get(
+      `
+    {
+      books {
+        _id
+        name
+        publisher
+        author
+      }
     }
+    `
+    )
+    .subscribe((res) => {
+      if (res["data"]) {
+        if (res["data"]["books"]) {
+          this.books = res["data"]["books"];
+          this.totalBooks = this.books.length;
+          this.onChange(null);
+        }
+      }
+    });
   }
 }

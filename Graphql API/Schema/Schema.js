@@ -2,6 +2,7 @@ const graphql = require('graphql');
 const { GraphQLObjectType,GraphQLString, GraphQLSchema,GraphQLID,GraphQLInt,GraphQLList }  =  graphql;
 const dao = require('../Methods');
 const auth = require('../Auth/Auth');
+// const imageThumbnail = require('image-thumbnail');
 
 const BookType = new GraphQLObjectType({
     name: 'Book',
@@ -10,7 +11,8 @@ const BookType = new GraphQLObjectType({
         name: { type: GraphQLString },
         publisher : { type: GraphQLString },
         author: { type: GraphQLString },
-        linked: { type: GraphQLString }
+        linked: { type: GraphQLString },
+        thumbnail : {type : GraphQLString}
     })
 })
 
@@ -53,7 +55,8 @@ const Mutation = new GraphQLObjectType({
             args: {
                 name: {type:GraphQLString},
                 publisher:  {type:GraphQLString},
-                author: {type:GraphQLString}
+                author: {type:GraphQLString},
+                thumbnail : {type:GraphQLString}
             },
             resolve(parent,args){
                args.linked = null;

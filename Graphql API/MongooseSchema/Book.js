@@ -18,6 +18,11 @@ var bookSchema = new Schema({
         required: true
     },
 
+    thumbnail : {
+        type:String,
+        required:true
+    },
+
     linked: {
         type: String,
     },
