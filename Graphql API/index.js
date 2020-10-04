@@ -6,6 +6,7 @@ const config = require('./Config/Config');
 const loginController = require('./Methods');
 const dataController = require('./Methods');
 const db = require('./db/db');
+const cors =  require('cors');
 
 let init = async ()=>{
     await db.dbInit();
@@ -15,10 +16,11 @@ let init = async ()=>{
     app.use(bodyParser.urlencoded({
         extended: false
     }));
+    app.use(cors())
 
     app.use(bodyParser.json());
     var allowCrossDomain = function (req, res, next) {
-        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 

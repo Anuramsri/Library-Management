@@ -1,4 +1,4 @@
-<!-- <div class="container-fluid">
+<div class="container-fluid"><br><br>
   <div class="card">
       <div class="card-header">
           <h3 style="float: left;">Book Configuration</h3>
@@ -8,16 +8,16 @@
           <div class="table-responsive ">
           <table class="table table-hover ">
             <thead class="thead-dark">
-              <tr>                
-                <th scope="col">Book</th>
+              <tr>
+                <th scope="col">Book Name</th>
                 <th scope="col">Author</th>
                 <th scope="col">Publisher</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let element of books;let i = index">                
-                <td scope="row">{{element.book}}</td>
+              <tr *ngFor="let element of books;let i = index">
+                <td scope="row">{{element.name}}</td>
                 <td>{{element.author}}</td>
                 <td>{{element.publisher}}</td>
                 <td>
@@ -32,53 +32,55 @@
   </div>
 </div>
 
+
 <ng-template class="modal" #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{action}} Book</h4>
+    <h4 class="modal-title pull-left">{{action}} Users</h4>
     <button type="button" title="Close" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="example-container">
-      <form #uform="ngForm">
+      <form [formGroup]="bookForm">
         <div class="form-row">
           <div class="form-group col-md-12">
             <label for="book">Book</label>
-            <input type="text" [(ngModel)] = "book.name" name="book" class="form-control" id="book" required 
-            placeholder="Type book name here" #book="ngModel" ngModel>            
+            <input type="text" formControlName="name" name="book" 
+            class="form-control" id="book" required 
+            placeholder="Type book name here">            
           </div>
 
-          <div class="form-group col-md-12">
-              <label for="author">Author</label>
-              <input type="text"  [(ngModel)]="book.author" name="authorN" 
-              class="form-control" id="authorName" required
-                  pattern="[A-Za-z ]+"  placeholder="Type author name here" #authorName="ngModel" ngModel>
-              <div [hidden]="author.valid || author.pristine" class="alert alert-danger">
-                  <div [hidden]="!author.hasError( 'required')">author is required</div>
-                  <div [hidden]="!author.hasError( 'pattern')">Only alphabets allowed</div>
+          <div class="form-group col-md-12">            
+              <label for="author">Author Name</label>
+              <input type="text"  formControlName="author" name="author" 
+              class="form-control" id="author" required
+                 placeholder="Type your name here">              
+              <div [hidden]="!bookForm.get('author').hasError( 'required')"
+                   class="alert alert-danger">author is required
               </div>
+              <div [hidden]="!bookForm.get('author').hasError('pattern')"
+                   class="alert alert-danger">Only alphabets allowed
+              </div>              
           </div>
-          <div class="form-group col-md-12">
-            <label for="publisher">Publisher</label>
-            <input type="text"  [(ngModel)]="book.publisher" name="publisher" 
+
+          <div class="form-group col-md-12">            
+            <label for="publisher">Publisher Name</label>
+            <input type="text"  formControlName="publisher" name="publisher" 
             class="form-control" id="publisher" required
-                pattern="[A-Za-z ]+"  placeholder="Type publisher name here" #publisher="ngModel" ngModel>
-            <div [hidden]="publisher.valid || publisher.pristine" class="alert alert-danger">
-                <div [hidden]="!publisher.hasError( 'required')">publisher is required</div>
-                <div [hidden]="!publisher.hasError( 'pattern')">Only alphabets allowed</div>
+            placeholder="Type your name here">
+            <div [hidden]="!bookForm.get('publisher').hasError( 'required')"
+            class="alert alert-danger">publisher is required
             </div>
-          </div>
+            <div [hidden]="!bookForm.get('publisher').hasError('pattern')"
+                  class="alert alert-danger">Only alphabets allowed
+            </div>  
+
         </div>
-        <div class="form-group col-md-12" *ngIf="action=='Update'">
-          <label for="inputName" class="label-control">UPLOAD FILE</label>
-          <input (change)="handleFileInput($event.target.files)" accept="image/png,image/jpeg,.pdf"
-           type="file" [(ngModel)]="book.thumbnail"
-            name="file" style="position: relative;opacity: 1;" required>
+
         </div>
-        
-        <button class="btn1 btn-primary" [disabled]="!uform.form.valid"
-          (click)="saveTo(book)">{{action == 'Edit' ? 'Update':'Add'}}</button>&nbsp; &nbsp;&nbsp; &nbsp;
+        <button class="btn1 btn-primary" [disabled]="!bookForm.valid"
+          (click)="saveTo()">{{action == 'Edit' ? 'Update':'Add'}}</button>&nbsp; &nbsp;&nbsp; &nbsp;
         <button class="btn1 btn-danger" (click)="modalRef.hide()">Cancel</button>
       </form>
     </div>
@@ -103,4 +105,4 @@
           </form>
       </div>
   </div>
-</ng-template> -->
+</ng-template>

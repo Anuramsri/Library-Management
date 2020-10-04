@@ -2,6 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ConfigurationService } from '../configuration.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { GraphQlService } from "../../../shared/graphql.service";
 @Component({
   selector: 'app-book-configuration',
   templateUrl: './book.component.html',
@@ -10,21 +12,38 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BookConfigurationComponent implements OnInit {
 
-  constructor(private modalService: BsModalService,private toastr: ToastrService,private configServe: ConfigurationService) {
-    this.books = [{name :'rework',author:'anu',publisher : 'a1',thumbnail:''},{name :'21st',author:'ram',publisher : 'a1',thumbnail:''}]
+  constructor(
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private configServe: ConfigurationService,
+    private fb: FormBuilder,
+    private graphqlService: GraphQlService
+   ) {
+    // this.books = [{name :'rework',author:'anu',publisher : 'a1',thumbnail:''},{name :'21st',author:'ram',publisher : 'a1',thumbnail:''}]
    }
 
  books :any = [];
+ book:any = {
+   name : '',
+   author : '',
+   publisher:''
+ };
  modalRef: BsModalRef;
  modalRef1: BsModalRef;
  action;
  index;
+
+ bookForm: FormGroup;
  
- book:any = {
-   thumbnail :''
- };
+
 
   ngOnInit(): void {
+    this.bookForm = this.fb.group({
+      name: new FormControl('', [Validators.required]),
+      author: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z ]+')]),
+      publisher: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z ]+')]),
+    })
+    this.getBooks()
   }
 
   openModal(template: TemplateRef<any>, act, data, index) {
@@ -50,40 +69,38 @@ export class BookConfigurationComponent implements OnInit {
   }
 
   getBooks(){
-    this.configServe.getBooks()
-    .subscribe(
-      (res) => {
-        console.log(res['result'])
+    this.graphqlService.get(
+      `
+    {
+      books {
+        _id
+        name
+        publisher
+        author
       }
-      )
-
+    }
+    `
+    )
+    .subscribe((res) => {
+      if (res["data"]) {
+        if (res["data"]["books"]) {
+          this.books = res["data"]["books"];
+          console.log(this.books)
+        }
+      }
+    });
   }
 
-  saveTo(book){
-    this.book = {...book} 
-    console.log(this.book)
+  saveTo(){
+    console.log(this.bookForm.value);
+    this.book = {...this.bookForm.value} 
     this.modalRef.hide();
     console.log("Added successfully")
   }
 
 
   delete() {
-    var data = this.book;
     this.toastr.success("Deleted Successfully", "Book");
-    // this._bookService.deleteProcess(data['id'])
-    //   .subscribe(
-    //     (res) => {
-    //       if(res['result']){
-    //         this.books.splice(this.index, 1)
-    //         this.toastr.success("Deleted Successfully", "Book");
-    //       }
-    //       else{
-    //         this.toastr.success("Delete Failed!", "Book");
-    //       }
-    //     },
-    //     err=>{
-    //       console.log(err);
-    //     })
   }
 
 }

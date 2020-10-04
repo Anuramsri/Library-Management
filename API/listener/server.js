@@ -36,6 +36,7 @@ async function start(router) {
 
             next();
         }
+        console.log("next")
         app.use(allowCrossDomain);
         app.use('/uploads', express.static('uploads'));
         /* configure the routes */

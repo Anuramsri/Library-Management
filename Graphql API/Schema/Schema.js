@@ -91,11 +91,13 @@ const Mutation = new GraphQLObjectType({
                 role: { type: GraphQLString }
             },
             resolve(parent,args){
+                console.log('in add user')
                 let promise = new Promise((resolve,reject)=>{
                     resolve(auth.hash(args.password));
                 });
                 promise.then((newPassword)=>{
                     args.password = newPassword;
+                    console.log('args',args)
                     return dao.add('user',args)
                 }).catch(()=>{
                     return 'Error';

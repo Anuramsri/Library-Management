@@ -20,7 +20,7 @@
               <tbody>
                 <tr *ngFor="let element of users;let i = index">
                   <!-- <td scope="row">{{i +1}}</td> -->
-                  <td scope="row">{{element.userName}}</td>
+                  <td scope="row">{{element.name}}</td>
                   <td>{{element.mobileNumber}}</td>
                   <td>{{element.email}}</td>
                   <td>{{element.role}}</td>
@@ -50,7 +50,7 @@
           <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="userName">User Name</label>
-                <input type="text"  [(ngModel)]="user.userName" name="userName" 
+                <input type="text"  [(ngModel)]="user.name" name="userName" 
                 class="form-control" id="userName" required
                     pattern="[A-Za-z ]+"  placeholder="Type your name here" #userName="ngModel" ngModel>
                 <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
@@ -79,7 +79,17 @@
                     <div [hidden]="!email.hasError( 'pattern')">Proper format required</div>
                 </div>
             </div>
-            <div class="form-group col-md-12">
+
+            <div class="form-group col-md-12" *ngIf="action!='Edit'">
+              <label for="password">password</label>
+              <input type="password" id="password" class="form-control" name="password"
+              [(ngModel)] = "user.password" required placeholder="Type your password" #password = "ngModel" ngModel>
+              <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+                  <div [hidden]="!password.hasError( 'required')">password is required</div>                  
+              </div>
+          </div>
+
+            <div class="form-group col-md-12"  *ngIf="action!='Edit'">
                 <label for="role">Role Type</label>
                 <select  id="role" 
                 class="form-control" list="plt-datalist" [(ngModel)]="user.role"
@@ -91,7 +101,7 @@
                     {{user.role}}
                 </option>
                 <option *ngFor="let data of roles" [ngValue]="data">
-                    {{data.roleName}}
+                    {{data}}
                 </option>
             </select>
             </div>

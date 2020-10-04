@@ -14,6 +14,8 @@ import { HttpModule } from '@angular/http';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import {DashboardComponent} from './Dashboard/dashboard.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
  
 // Testing
 import { MatSliderModule } from '@angular/material/slider';
@@ -34,6 +36,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     FormsModule,
     MatCardModule,
     HttpModule,

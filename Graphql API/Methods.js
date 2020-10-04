@@ -9,7 +9,9 @@ let getAll = async (type)=>{
 }
 
 let add = async (type,data)=>{
-    let result = MongoModels[type].create(data);
+    console.log('In mongo add')
+    let result = await MongoModels[type].create(data);
+    console.log('result',result)
     return result;
 }
 
@@ -19,7 +21,7 @@ let remove = async (type,data)=>{
 }
 
 let update = async (type,data)=>{
-    let result =  MongoModels[type].findByIdAndUpdate(data._id, {
+    let result =  await MongoModels[type].findByIdAndUpdate(data._id, {
         ...data,
     }, {
         new: true
