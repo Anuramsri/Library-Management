@@ -5,6 +5,7 @@ import { ConfigurationComponent } from '../app/configuration/configuration.compo
 import { BookConfigurationComponent } from '../app/configuration/book/book.component';
 import { LoginComponent } from '../app/login/login.component';
 import {DashboardComponent} from './Dashboard/dashboard.component';
+import { LinkedbooksComponent } from './linkedbooks/linkedbooks.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
     component: DashboardComponent,
     // canActivate: [AuthGuard],
   },
+  {
+    path: 'linkedBooks',
+    component:LinkedbooksComponent,
+    // canActivate:[AuthGuard]
+  },
 
   {
     path: 'configuration',
@@ -35,6 +41,8 @@ const routes: Routes = [
       { path: 'user', component: BookConfigurationComponent },
     ]
   },
+
+
 ];
 
 @NgModule({

@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import {UserConfigurationComponent} from '../app/configuration/user/user.component';
 import {BookConfigurationComponent} from '../app/configuration/book/book.component';
-import{LoginComponent} from '../app/login/login.component';
+import {LinkedbooksComponent } from '../app/linkedbooks/linkedbooks.component';
+import {LoginComponent} from '../app/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
@@ -30,6 +31,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ConfigurationComponent,
     UserConfigurationComponent,
     BookConfigurationComponent,
+    LinkedbooksComponent,
     LoginComponent,
     DashboardComponent
   ],

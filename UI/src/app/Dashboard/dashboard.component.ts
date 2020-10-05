@@ -71,6 +71,7 @@ export class DashboardComponent{
         name
         publisher
         author
+        linked
       }
     }
     `
@@ -78,9 +79,15 @@ export class DashboardComponent{
     .subscribe((res) => {
       if (res["data"]) {
         if (res["data"]["books"]) {
-          this.books = res["data"]["books"];
-          this.totalBooks = this.books.length;
-          this.onChange(null);
+          var dbook = [];
+          for(var i =0;i<res["data"]["books"].length;i++){
+            if(res['data']['books'][i]['linked']==null){
+              dbook.push(res['data']['books'][i])
+            }            
+            this.books = dbook;
+            this.totalBooks = this.books.length;
+            this.onChange(null);
+          }
         }
       }
     });

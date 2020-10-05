@@ -69,7 +69,8 @@ const Mutation = new GraphQLObjectType({
                 _id: {type:GraphQLString},
                 name: {type:GraphQLString},
                 publisher:  {type:GraphQLString},
-                author: {type:GraphQLString}
+                author: {type:GraphQLString},
+                thumbnail: {type:GraphQLString}
             },
             resolve(parent,args){
                return dao.update('book',args)

@@ -1,0 +1,21 @@
+<button [routerLink]="'/dashboard'">Back</button><br><br>
+
+<div class="row" style="padding: 20px;">
+    <div class="col-md-4" *ngFor="let card of filterdBooks">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{card.name}}</mat-card-title>
+          <mat-card-subtitle>{{card.author}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{card.publisher}}</p>
+        </mat-card-content>
+        <mat-card-actions>        
+          <button mat-raised-button>Link</button>        
+        </mat-card-actions>
+      </mat-card>
+      <br><br>
+    </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="onChange($event)" [length]="totalBooks" [pageSize]="limit"></mat-paginator>

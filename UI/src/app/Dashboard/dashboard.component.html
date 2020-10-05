@@ -1,9 +1,15 @@
-<!-- Toolbar -->
 <div class="toolbar" role="banner">
     <span style="padding: 1%;">Library Management</span>
       <div class="spacer">      
       </div>
-      <span *ngIf="role=='Admin'"><i class="fa fa-cogs" aria-hidden="true" [routerLink]="'/configuration'"></i></span>
+      <span  style="padding: 1%;" *ngIf="role=='Admin'">
+        <i class="fa fa-cogs" title="Configuration" aria-hidden="true" [routerLink]="'/configuration'">
+        </i>
+      </span>
+      <span style="padding: 1%;">
+        <i class="fa fa-eye" aria-hidden="true" title="Linked Books" [routerLink]="'/linkedBooks'">
+        </i>
+      </span>
       <span style="padding: 1%;">
         {{name | uppercase}}
         <i class="fa fa-sign-out" aria-hidden="true" (click)="logout()"></i>
@@ -19,11 +25,11 @@
   
   
   <div class="row" style="padding: 20px;">
-    <div class="col-md-3" *ngFor="let card of filterdBooks">
-      <mat-card class="example-card" >
+    <div class="col-md-4" *ngFor="let card of filterdBooks">
+      <mat-card class="example-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>{{card.title}}</mat-card-title>
+          <mat-card-title>{{card.name}}</mat-card-title>
           <mat-card-subtitle>{{card.author}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>

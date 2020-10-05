@@ -36,7 +36,7 @@ export class BookConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.bookForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
-      author: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z ]+')]),
+      author: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z ]+.')]),
       publisher: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z ]+')]),
     })
     this.getBooks()
@@ -46,10 +46,12 @@ export class BookConfigurationComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { backdrop: 'static' });
     this.action = act;
     console.log(data,index)
-    if (data) {
-      this.index = index;
+    if (data && act !='Add') {
       this.book = {...data}
+      this.bookForm.patchValue(data)
+      this.index = index;
     }else {    
+      this.bookForm.reset();
       this.book = {}
     }
   }
@@ -83,19 +85,28 @@ export class BookConfigurationComponent implements OnInit {
         if (res["data"]["books"]) {
           this.books = res["data"]["books"];
           console.log(this.books)
+          this.totalBooks = this.books.length;
+          this.onChange(null);
         }
       }
     });
   }
 
-  // handleFileInput(e){
-  //   console.log(e)
-  // }
+  totalBooks = 0;
+  limit = 5;
+  page = 0;
+  filterdBooks: any = [];
+
+  onChange(event) {
+    this.page = event ? event.pageIndex : 0;
+    this.limit = event ? event.pageSize : 5;
+    this.filterdBooks = this.books.slice(this.page * this.limit, (this.page + 1) * this.limit);
+    console.log(this.filterdBooks)
+  }
 
   saveTo(){
     console.log(this.bookForm.value);
     this.book = {...this.bookForm.value}
-
     if(this.action == 'Add'){
       const userData = gql`
       mutation addBook($name:String,$publisher:String,$author:String,$thumbnail:String){
@@ -128,8 +139,9 @@ export class BookConfigurationComponent implements OnInit {
     }else{
 
       const userData = gql`
-      mutation updateUser($id:String,$name:String,$publisher:String,$author:String){
-        updateUser(_id: $id,name:$name,publisher:$publisher,author:$author) {
+      mutation updateBook($id:String,$name:String,$publisher:String,$author:String){
+        updateBook(_id: $id,name:$name,publisher:$publisher,author:$author) {
+         _id
          name
          publisher
          author
@@ -157,7 +169,28 @@ export class BookConfigurationComponent implements OnInit {
 
 
   delete() {
-    this.toastr.success("Deleted Successfully", "Book");
+    var data = this.book;
+    console.log(data)
+    const userData = gql`
+    mutation removeBook($id:String){
+      removeBook(_id: $id) {
+        name
+      }
+    }
+  `;
+  
+    this.apollo.mutate({
+      mutation: userData,
+      variables : {
+        id: data._id
+      }
+    }).subscribe(res=>{
+      if(res['data']){
+        this.getBooks();
+        this.modalRef.hide();
+        this.toastr.success("Deleted succesfully")
+      }
+    });
   }
 
 }

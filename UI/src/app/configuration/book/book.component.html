@@ -16,7 +16,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let element of books;let i = index">
+              <tr *ngFor="let element of filterdBooks;let i = index">
                 <td scope="row">{{element.name}}</td>
                 <td>{{element.author}}</td>
                 <td>{{element.publisher}}</td>
@@ -31,7 +31,7 @@
       </div>
   </div>
 </div>
-
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" (page)="onChange($event)" [length]="totalBooks" [pageSize]="limit"></mat-paginator>
 
 <ng-template class="modal" #template>
   <div class="modal-header">
